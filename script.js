@@ -4,7 +4,7 @@ const gameBoard = [
 ["", "", ""]
 ]
 
-const turnNumber = 2;
+let turnNumber = 2;
 
 const $gameBoard = document.querySelector("#gameBoard")
 
@@ -36,9 +36,14 @@ function addGameButtonListeners() {
 }
 
 function drawMarker(row, column) {
-    if (gameBoard[row][column] = "") {
+    if (gameBoard[row][column] == "") {
+        if (turnNumber % 2 == 0) {
+            gameBoard[row][column] = "X";
+        } else {
+            gameBoard[row][column] = "O"
+        }
+        turnNumber++;
     }
-    gameBoard[row][column] = "X";
 }
 
 drawGameBoard()
