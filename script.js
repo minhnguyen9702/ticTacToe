@@ -38,7 +38,7 @@ function addGameButtonListeners() {
 function drawMarker(row, column) {
     if (gameBoard[row][column] == "") {
         if (turnNumber % 2 == 0) {
-            gameBoard[row][column] = "X";
+            gameBoard[row][column] = "X";   
         } else {
             gameBoard[row][column] = "O"
         }
