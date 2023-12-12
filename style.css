@@ -21,11 +21,11 @@ td {
     font-size: 3em;
 }
 
-td:hover {
+td:hover,td:active {
     background-color: lightgray;
 }
-
 .popUp {
+    font-size: 1.2em;
     margin: 10px;
     width: 30vh;
     text-align: center;
@@ -35,5 +35,6 @@ td:hover {
 
 button {
     margin-bottom: 1em;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
     padding: 10px;
 }
