@@ -1,15 +1,17 @@
-const gameBoard = [
+let gameBoard = [
 ["", "", ""],
 ["", "", ""],
 ["", "", ""]
 ]
 
 let turnNumber = 2;
+let gameEnded = false;
 
+const $reset = document.querySelector("#reset")
 const $gameBoard = document.querySelector("#gameBoard")
 
 function drawGameBoard() {
-    $gameBoard.innerHTML = ""
+    $gameBoard.innerHTML = "";
     for(let i = 0; i < gameBoard.length; i++) {
         const gameRow = `
             <tr>
@@ -35,7 +37,7 @@ function addGameButtonListeners() {
 }
 
 function drawMarker(row, column) {
-    if (gameBoard[row][column] == "") {
+    if (gameBoard[row][column] == "" && gameEnded == false) {
         if (turnNumber % 2 == 0) {
             gameBoard[row][column] = "X";
             drawGameBoard();
@@ -52,36 +54,61 @@ function drawMarker(row, column) {
 function checkForVictory(marker) {
     for(let i = 0; i < gameBoard.length; i++) {
         if(gameBoard[i][0] == marker && gameBoard[i][1] == marker && gameBoard[i][2] == marker) {
-            displayResult(marker+ " Wins!")
+            displayResult(marker+ " Wins!");
+            gameEnded = true;
+            return;
         } else if (gameBoard[0][i] == marker && gameBoard[1][i] == marker && gameBoard[2][i] == marker) {
             displayResult(marker+ " Wins!")
+            gameEnded = true;
+            return;
         }
     }
 
     if (gameBoard[0][0] == marker && gameBoard[1][1] == marker && gameBoard[2][2] == marker) {
-        displayResult(marker+ " Wins!")
+        displayResult(marker+ " Wins!");
+        gameEnded = true;
+        return;
     }
     if (gameBoard[0][2] == marker && gameBoard[1][1] == marker && gameBoard[2][0] == marker) {
-        displayResult(marker+ " Wins!")
+        displayResult(marker+ " Wins!");
+        gameEnded = true;
+        return;
     }
 
     if (gameBoard[0][0] != "" && gameBoard[0][1] != "" && gameBoard[0][2] != ""
     && gameBoard[1][0] != "" && gameBoard[1][1] != "" && gameBoard[1][2] != ""
     && gameBoard[2][0] != "" && gameBoard[2][1] != "" && gameBoard[2][2] != "") {
-        displayResult("Draw!")
+        displayResult("Draw!");
+        gameEnded = true;
+        return;
     }
 }
 
 function displayResult(string) {
-    const dialog = `
-        <dialog open>
+    const popUp = `
+        <div class="popUp">
             <p>${string}</p>
-            <form method="dialog">
-            <button>Play Again?</button>
-            </form>
-        </dialog>
+            <button id="playAgain">Play Again?</button>
+        </div>
     `;
-    $gameBoard.innerHTML += dialog;
+
+    $reset.innerHTML += popUp;
+    
+    const playAgain = document.querySelector("#playAgain");
+    playAgain.removeEventListener("click", resetGame);
+    playAgain.addEventListener("click", resetGame);
+}
+
+function resetGame() {
+    gameEnded = false;
+    $reset.innerHTML = "";
+    turnNumber = 2;
+    gameBoard = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
+    drawGameBoard();
 }
 
 drawGameBoard()
